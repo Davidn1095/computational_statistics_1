@@ -1,0 +1,36 @@
+# Definimos la funcion simular_ruina_jugador
+simular_ruina_jugador <- function(capital_inicial) {
+  # Inicializamos 3 variables
+  capital_actual <- capital_inicial
+  tiempo <- 0
+  capitales <- c(capital_actual)
+  
+  # Utilizamos un bucle while para simular el juego hasta que el capital
+  llegue a 0
+  while (capital_actual > 0) {
+    # Lanzamos la moneda (cara: ganar 1 euro, cruz: perder 1 euro)
+    resultado <- sample(c(-1, 1), size = 1, prob = c(0.5, 0.5))
+    
+    # Actualizamos el capital
+    capital_actual <- capital_actual + resultado
+    
+    # Incrementamos el tiempo
+    tiempo <- tiempo + 1
+    
+    # Registramos el capital en esta iteración
+    capitales <- c(capitales, capital_actual)
+  }
+  
+  # Creamos un gráfico de la evolución del capital
+  plot(0:tiempo, capitales, type = "l", xlab = "Tiempo", ylab = "Capital")
+  abline(h = 0, col = "red", lty = 2)  # Línea horizontal en la ruina
+  title("Evolución del capital del jugador")
+  
+  # Devolvemos el valor de tiempo en que se arruinó
+  return(tiempo)
+}
+
+# Ejemplo de uso con un capital inicial de 20 euros
+capital_inicial <- 20
+tiempo_ruina <- simular_ruina_jugador(capital_inicial)
+cat("El jugador se arruinó en el instante de tiempo:", tiempo_ruina, "\n")
